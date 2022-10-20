@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NovaPasta\" />
+    <Folder Include="Models\DTO\" />
   </ItemGroup>
 
 </Project>
