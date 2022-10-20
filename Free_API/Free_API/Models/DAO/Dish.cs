@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public double price { get; set; }
         public string description { get; set; }
+        public List<Allergen> allergens { get; set; } = new List<Allergen>();
     }
 }
