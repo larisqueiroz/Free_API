@@ -6,6 +6,6 @@ namespace Free_API.Models.DAO
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<Dish> dishes { get; set; }
+        public List<Category> categories { get; set; }
     }
 }
