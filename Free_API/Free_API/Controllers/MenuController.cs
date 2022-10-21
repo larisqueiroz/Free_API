@@ -8,7 +8,7 @@ namespace Free_API.Controllers
     [Route("menu")]
     public class MenuController : ControllerBase
     {
-        public List<Category> categories = new List<Category>()
+        private List<Category> categories = new List<Category>()
         {
            new Category()
            {
@@ -52,15 +52,50 @@ namespace Free_API.Controllers
            },
         };
         [HttpGet]
-        public ActionResult<List<Category>> GetAll()
+        public async Task<ActionResult<List<Category>>> GetAll()
         {
             return Ok(categories);
         }
 
         [HttpPost]
-        public ActionResult<List<Category>> Post([FromBody] Category category) 
+        public async Task<ActionResult<List<Category>>> Post([FromBody] Category category) 
         {
             categories.Add(category);
+            return Ok(categories);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Category>> Put([FromBody] Category category)
+        {
+            Category saved = categories.Find(id => id.Id == category.Id);
+            if (saved == null)
+            {
+                return BadRequest("Category not found.");
+            }
+
+            if (category.Name != null)
+            {
+                saved.Name = category.Name;
+            }
+            if (category.dishes != null)
+            {
+                saved.dishes = category.dishes;
+            }
+
+            return Ok(saved);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<List<Category>>> Delete(int id)
+        {
+            var category_saved = categories.Find(c => c.Id == id);
+            if (category_saved == null)
+            {
+                return BadRequest("Category not found.");
+            }
+
+            categories.Remove(category_saved);
+
             return Ok(categories);
         }
     }
