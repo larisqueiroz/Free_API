@@ -57,6 +57,18 @@ namespace Free_API.Controllers
             return Ok(categories);
         }
 
+        [HttpGet("by_id")]
+        public async Task<ActionResult<Category>> GetbyId(int id)
+        {
+            var category = categories.Find(c => c.Id == id);
+            if (category == null)
+            {
+                return BadRequest("Category not found.");
+
+            }
+            return Ok(category);
+        }
+
         [HttpPost]
         public async Task<ActionResult<List<Category>>> Post([FromBody] Category category) 
         {
