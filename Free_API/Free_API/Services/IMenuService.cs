@@ -7,5 +7,7 @@ public interface IMenuService
 {
     public List<MenuDto> getAllMenus();
     public MenuDto getMenuById(int id);
-    
+    public MenuDto SaveMenu(MenuDto menu);
+    public MenuDto UpdateMenu(MenuDto menu, int id);
+    public MenuDto DeleteMenu(int id);
 }

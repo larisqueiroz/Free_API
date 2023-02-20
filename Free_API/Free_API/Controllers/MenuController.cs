@@ -3,6 +3,7 @@ using System;
 using AutoMapper;
 using Free_API.Services;
 using Free_API.Models.DAO;
+using Free_API.Models.DTO;
 
 namespace Free_API.Controllers
 {
@@ -63,63 +64,42 @@ namespace Free_API.Controllers
            },
         };*/
         [HttpGet]
-        public ActionResult<List<Category>> GetAll()
+        public ActionResult<List<Menu>> GetAll()
         {
             return Ok(_menuService.getAllMenus());
         }
 
         [HttpGet("by_id")]
-        public ActionResult<Category> GetbyId(int id)
+        public ActionResult<Menu> GetbyId(int id)
         {
-            var category = _menuService.getMenuById(id);
-            if (category == null)
+            var menu = _menuService.getMenuById(id);
+            if (menu == null)
             {
-                return BadRequest("Category not found.");
+                return BadRequest("Menu not found.");
 
             }
-            return Ok(category);
+            return Ok(menu);
         }
 
-        /*[HttpPost]
-        public ActionResult<List<Category>> Post([FromBody] Category category) 
+        [HttpPost]
+        public ActionResult<Menu> Post([FromBody] MenuDto menu)
         {
-            _menuService
-            return Ok(categories);
+            var savedMenu = _menuService.SaveMenu(menu);
+            return Ok(savedMenu);
         }
 
         [HttpPut]
-        public ActionResult<Category> Put([FromBody] Category category)
+        public ActionResult<Menu> Put(MenuDto menu, [FromQuery] int id)
         {
-            var saved = categories.Find(id => id.Id == category.Id);
-            if (saved == null)
-            {
-                return BadRequest("Category not found.");
-            }
-
-            if (category.Name != null)
-            {
-                saved.Name = category.Name;
-            }
-            if (category.dishes != null)
-            {
-                saved.dishes = category.dishes;
-            }
-
-            return Ok(saved);
+            return Ok(_menuService.UpdateMenu(menu, id));
         }
 
         [HttpDelete]
-        public ActionResult<List<Category>> Delete(int id)
+        public ActionResult<Menu> Delete(int id)
         {
-            var category_saved = categories.Find(c => c.Id == id);
-            if (category_saved == null)
-            {
-                return BadRequest("Category not found.");
-            }
+            var deleted = _menuService.DeleteMenu(id);
 
-            categories.Remove(category_saved);
-
-            return Ok(categories);
-        }*/
+            return Ok(deleted);
+        }
     }
 }

@@ -40,16 +40,10 @@ public class MenuRepository : IMenuRepository
         return menu;
     }
     
-    public Menu Delete(int id)
+    public Menu Delete(Menu menu)
     {
-        var savedMenu = _menuRepository.Menus.Where(m => m.Id == id).FirstOrDefault();
-        if (savedMenu == null)
-        {
-            throw new Exception("Menu não encontrado");
-        }
-
-        _menuRepository.Menus.Remove(savedMenu);
+        _menuRepository.Menus.Remove(menu);
         _menuRepository.SaveChanges();
-        return savedMenu;
+        return menu;
     }
 }

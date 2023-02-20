@@ -11,5 +11,5 @@ public interface IMenuRepository
     public Menu GetById(int id);
     public Menu Save(Menu menu);
     public Menu Update(Menu menu);
-    public Menu Delete(int id);
+    public Menu Delete(Menu menu);
 }
