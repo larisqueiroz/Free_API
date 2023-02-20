@@ -34,7 +34,7 @@ namespace FreeAPI.Migrations
 
                     b.HasIndex("dishesId");
 
-                    b.ToTable("AllergenDish");
+                    b.ToTable("AllergenDish", (string)null);
                 });
 
             modelBuilder.Entity("Free_API.Models.DAO.Allergen", b =>
@@ -51,7 +51,7 @@ namespace FreeAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Allergens");
+                    b.ToTable("Allergens", (string)null);
                 });
 
             modelBuilder.Entity("Free_API.Models.DAO.Category", b =>
@@ -73,7 +73,7 @@ namespace FreeAPI.Migrations
 
                     b.HasIndex("MenuId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Free_API.Models.DAO.Dish", b =>
@@ -102,7 +102,7 @@ namespace FreeAPI.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Dishes");
+                    b.ToTable("Dishes", (string)null);
                 });
 
             modelBuilder.Entity("Free_API.Models.DAO.Menu", b =>
@@ -123,7 +123,7 @@ namespace FreeAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Menus", (string)null);
                 });
 
             modelBuilder.Entity("AllergenDish", b =>

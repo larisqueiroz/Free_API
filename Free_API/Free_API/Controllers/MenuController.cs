@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using AutoMapper;
+using Free_API.Services;
 using Free_API.Models.DAO;
 
 namespace Free_API.Controllers
@@ -8,7 +10,16 @@ namespace Free_API.Controllers
     [Route("menus")]
     public class MenuController : ControllerBase
     {
-        private List<Category> categories = new List<Category>()
+        public readonly IMapper _mapper;
+        public readonly IMenuService _menuService;
+
+        public MenuController(IMapper mapper, IMenuService menuService)
+        {
+            _mapper = mapper;
+            _menuService = menuService;
+        }
+        
+        /*private List<Category> categories = new List<Category>()
         {
            new Category()
            {
@@ -50,17 +61,17 @@ namespace Free_API.Controllers
                    }
                }
            },
-        };
+        };*/
         [HttpGet]
         public ActionResult<List<Category>> GetAll()
         {
-            return Ok(categories);
+            return Ok(_menuService.getAllMenus());
         }
 
         [HttpGet("by_id")]
         public ActionResult<Category> GetbyId(int id)
         {
-            var category = categories.Find(c => c.Id == id);
+            var category = _menuService.getMenuById(id);
             if (category == null)
             {
                 return BadRequest("Category not found.");
@@ -69,10 +80,10 @@ namespace Free_API.Controllers
             return Ok(category);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult<List<Category>> Post([FromBody] Category category) 
         {
-            categories.Add(category);
+            _menuService
             return Ok(categories);
         }
 
@@ -109,6 +120,6 @@ namespace Free_API.Controllers
             categories.Remove(category_saved);
 
             return Ok(categories);
-        }
+        }*/
     }
 }
