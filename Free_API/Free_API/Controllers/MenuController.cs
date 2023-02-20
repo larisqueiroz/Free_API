@@ -5,7 +5,7 @@ using Free_API.Models.DAO;
 namespace Free_API.Controllers
 {
     [ApiController]
-    [Route("menu")]
+    [Route("menus")]
     public class MenuController : ControllerBase
     {
         private List<Category> categories = new List<Category>()
@@ -52,13 +52,13 @@ namespace Free_API.Controllers
            },
         };
         [HttpGet]
-        public async Task<ActionResult<List<Category>>> GetAll()
+        public ActionResult<List<Category>> GetAll()
         {
             return Ok(categories);
         }
 
         [HttpGet("by_id")]
-        public async Task<ActionResult<Category>> GetbyId(int id)
+        public ActionResult<Category> GetbyId(int id)
         {
             var category = categories.Find(c => c.Id == id);
             if (category == null)
@@ -70,16 +70,16 @@ namespace Free_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Category>>> Post([FromBody] Category category) 
+        public ActionResult<List<Category>> Post([FromBody] Category category) 
         {
             categories.Add(category);
             return Ok(categories);
         }
 
         [HttpPut]
-        public async Task<ActionResult<Category>> Put([FromBody] Category category)
+        public ActionResult<Category> Put([FromBody] Category category)
         {
-            Category saved = categories.Find(id => id.Id == category.Id);
+            var saved = categories.Find(id => id.Id == category.Id);
             if (saved == null)
             {
                 return BadRequest("Category not found.");
@@ -98,7 +98,7 @@ namespace Free_API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<List<Category>>> Delete(int id)
+        public ActionResult<List<Category>> Delete(int id)
         {
             var category_saved = categories.Find(c => c.Id == id);
             if (category_saved == null)

@@ -4,8 +4,9 @@ namespace Free_API.Models.DAO
 {
     public class Menu
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public List<Category> categories { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; } = String.Empty;
+        public string Description { get; set; } = String.Empty;
+        public List<Category> categories { get; set; } = new List<Category>();
     }
 }
