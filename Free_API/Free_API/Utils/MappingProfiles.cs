@@ -8,9 +8,6 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<Menu, MenuDto>();
-        CreateMap<MenuDto, Menu>();
-        
         CreateMap<Allergen, AllergenDto>();
         CreateMap<AllergenDto, Allergen>();
         

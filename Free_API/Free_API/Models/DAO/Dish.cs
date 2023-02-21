@@ -7,5 +7,6 @@
         public double price { get; set; }
         public string description { get; set; } = String.Empty;
         public List<Allergen> allergens { get; set; } = new List<Allergen>();
+        public Category category { get; set; }
     }
 }

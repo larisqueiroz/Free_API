@@ -19,7 +19,7 @@ public class CategoryRepository : ICategoryRepository
 
     public Category GetById(int id)
     {
-        return _categoryRepository.Categories.Where(m => m.Id == id).FirstOrDefault();
+        return _categoryRepository.Categories.Where(c => c.Id == id).FirstOrDefault();
     }
 
     public Category Save(Category category)

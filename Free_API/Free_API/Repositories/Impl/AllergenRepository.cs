@@ -21,7 +21,7 @@ public class AllergenRepository : IAllergenRepository
 
     public Allergen GetById(int id)
     {
-        return _allergenRepository.Allergens.Where(m => m.Id == id).FirstOrDefault();
+        return _allergenRepository.Allergens.Where(a => a.Id == id).FirstOrDefault();
     }
 
     public Allergen Save(Allergen allergen)
