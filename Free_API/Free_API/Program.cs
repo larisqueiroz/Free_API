@@ -1,5 +1,8 @@
 using Free_API.Data;
 using AutoMapper;
+using Free_API.Repositories;
+using Free_API.Services;
+using Free_API.Services.Impl;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddScoped<IDishRepository,DishRepository>();
+builder.Services.AddScoped<IDishService,DishService>();
+
+builder.Services.AddScoped<IAllergenRepository,AllergenRepository>();
+builder.Services.AddScoped<IAllergenService,AllergenService>();
+
+builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
+builder.Services.AddScoped<ICategoryService,CategoryService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

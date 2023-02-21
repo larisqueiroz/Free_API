@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Free_API.Models.DAO;
+using Free_API.Models.DTO;
+using AutoMapper;
+using Free_API.Services;
 
 namespace Free_API.Controllers;
 
@@ -6,5 +10,51 @@ namespace Free_API.Controllers;
 [Route("categories")]
 public class CategoryController: ControllerBase
 {
+    public readonly IMapper _mapper;
+    public readonly ICategoryService _categoryService;
+
+    public CategoryController(IMapper mapper, ICategoryService categoryService)
+    {
+        _mapper = mapper;
+        _categoryService = categoryService;
+    }
     
+    [HttpGet]
+    public ActionResult<List<Category>> GetAll()
+    {
+        return Ok(_categoryService.getAllCategories());
+    }
+
+    [HttpGet("{id}")]
+    public ActionResult<Category> GetbyId([FromRoute] int id)
+    {
+        var category = _categoryService.getCategoryById(id);
+        if (category == null)
+        {
+            return BadRequest("Category not found.");
+
+        }
+        return Ok(category);
+    }
+
+    [HttpPost]
+    public ActionResult<Category> Post([FromBody] CategoryDto category)
+    {
+        var savedCategory = _categoryService.SaveCategory(category);
+        return Ok(savedCategory);
+    }
+
+    [HttpPut]
+    public ActionResult<Category> Put(CategoryDto category, [FromQuery] int id)
+    {
+        return Ok(_categoryService.UpdateCategory(category, id));
+    }
+
+    [HttpDelete("{id}")]
+    public ActionResult<Category> Delete([FromRoute] int id)
+    {
+        var deleted = _categoryService.DeleteCategory(id);
+
+        return Ok(deleted);
+    }
 }

@@ -2,6 +2,7 @@
 using Free_API.Models.DTO;
 using AutoMapper;
 using Free_API.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Free_API.Repositories;
 
