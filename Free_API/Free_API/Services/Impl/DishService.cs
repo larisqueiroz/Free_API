@@ -2,6 +2,7 @@
 using Free_API.Repositories;
 using Free_API.Models.DAO;
 using Free_API.Models.DTO;
+using BadHttpRequestException = Microsoft.AspNetCore.Http.BadHttpRequestException;
 
 namespace Free_API.Services.Impl;
 
@@ -40,7 +41,7 @@ public class DishService : IDishService
         var dishSaved = _dishRepository.GetById(id);
         if (dishSaved == null)
         {
-            throw new Exception("Prato não encontrado");
+            throw new BadHttpRequestException("Prato não encontrado");
         }
 
         dishSaved.price = dishData.price;
@@ -58,7 +59,7 @@ public class DishService : IDishService
         var dishSaved = _dishRepository.GetById(id);
         if (dishSaved == null)
         {
-            throw new Exception("Prato não encontrado");
+            throw new BadHttpRequestException("Prato não encontrado");
         }
         return _mapper.Map<DishDto>(_dishRepository.Delete(dishSaved));
     }

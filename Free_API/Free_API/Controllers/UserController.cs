@@ -29,9 +29,9 @@ public class UserController : ControllerBase
         return saved;
     }
 
-    /*[HttpPost("login")]
-    public async Task<ActionResult<User>> Login(UserDto user)
+    [HttpPost("login")]
+    public async Task<ActionResult<UserDto>> Login(UserDto request)
     {
-        
-    }*/
+        return _userService.Login(request);
+    }
 }

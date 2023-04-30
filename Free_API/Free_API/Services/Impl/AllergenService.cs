@@ -40,7 +40,7 @@ public class AllergenService : IAllergenService
         var allergenSaved = _allergenRepository.GetById(id);
         if (allergenSaved == null)
         {
-            throw new Exception("Alergenico não encontrada");
+            throw new BadHttpRequestException("Alergenico não encontrada");
         }
 
         allergenSaved.dishes = allergenData.dishes;
@@ -56,7 +56,7 @@ public class AllergenService : IAllergenService
         var allergenSaved = _allergenRepository.GetById(id);
         if (allergenSaved == null)
         {
-            throw new Exception("Alergenico não encontrado");
+            throw new BadHttpRequestException("Alergenico não encontrado");
         }
         return _mapper.Map<AllergenDto>(_allergenRepository.Delete(allergenSaved));
     }

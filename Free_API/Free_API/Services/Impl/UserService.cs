@@ -1,11 +1,16 @@
-﻿using AutoMapper;
+﻿using System.IdentityModel.Tokens.Jwt;
+using AutoMapper;
 using Free_API.Repositories;
 using Free_API.Models.DAO;
 using Free_API.Models.DTO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using BadHttpRequestException = Microsoft.AspNetCore.Http.BadHttpRequestException;
 
 namespace Free_API.Services.Impl;
 
@@ -13,11 +18,13 @@ public class UserService : IUserService
 {
     public readonly IUserRepository _userRepository;
     public readonly IMapper _mapper;
+    public readonly IConfiguration _Configuration;
     
-    public UserService(IUserRepository userRepository, IMapper mapper)
+    public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration Configuration)
     {
         _userRepository = userRepository;
         _mapper = mapper;
+        _Configuration = Configuration;
     }
     
     private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
@@ -26,6 +33,15 @@ public class UserService : IUserService
         {
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        }
+    }
+
+    private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+    {
+        using (var hmac = new HMACSHA512(passwordSalt))
+        {
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return computedHash.SequenceEqual(passwordHash);
         }
     }
     
@@ -59,10 +75,47 @@ public class UserService : IUserService
         return _mapper.Map<UserDto>(_userRepository.Save(userDao));
     }
 
-    /*public async Task<ActionResult<string>> Login(User user)
+    public UserDto Login(UserDto user)
     {
-        
-    }*/
+        var savedUser = _userRepository.GetByEmail(user.Email);
+
+        if (savedUser == null)
+        {
+            throw new BadHttpRequestException("Usuario nao encontrado");
+        }
+
+        var login = VerifyPasswordHash(user.Password, savedUser.Hash, savedUser.Salt);
+        if (!login)
+            throw new BadHttpRequestException("Senha incorreta");
+
+        string token = CreateToken(_mapper.Map<UserDto>(savedUser));
+        var dto = _mapper.Map<UserDto>(savedUser);
+        dto.Token = token;
+
+        return dto;
+    }
+
+    private string CreateToken(UserDto user)
+    {
+        List<Claim> claims = new List<Claim>();
+        {
+            new Claim(ClaimTypes.Name, user.Name);
+        }
+
+        var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(_Configuration.GetSection("AppSettings:Token").Value));
+
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(30),
+            signingCredentials: credentials);
+
+        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return jwt;
+    }
 
     public UserDto UpdateUser(UserDto user, string email)
     {
@@ -70,7 +123,7 @@ public class UserService : IUserService
         var userSaved = _userRepository.GetByEmail(email);
         if (userSaved == null)
         {
-            throw new Exception("Usuario não encontrado");
+            throw new BadHttpRequestException("Usuario não encontrado");
         }
 
         userSaved.Email = userData.Email;
@@ -86,7 +139,7 @@ public class UserService : IUserService
         var userSaved = _userRepository.GetByEmail(email);
         if (userSaved == null)
         {
-            throw new Exception("Usuario não encontrado");
+            throw new BadHttpRequestException("Usuario não encontrado");
         }
         return _mapper.Map<UserDto>(_userRepository.Delete(userSaved));
     }

@@ -3,6 +3,7 @@ using Free_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreeAPI.Migrations
 {
     [DbContext(typeof(FreeAPIContext))]
-    partial class FreeAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20230430003238_AddUser")]
+    partial class AddUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +105,8 @@ namespace FreeAPI.Migrations
             modelBuilder.Entity("Free_API.Models.DAO.User", b =>
                 {
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Hash")
                         .IsRequired()
@@ -115,8 +119,6 @@ namespace FreeAPI.Migrations
                     b.Property<byte[]>("Salt")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
-
-                    b.HasKey("Email");
 
                     b.ToTable("Users");
                 });

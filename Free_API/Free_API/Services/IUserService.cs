@@ -10,4 +10,5 @@ public interface IUserService
     public UserDto SaveUser(UserDto user);
     public UserDto UpdateUser(UserDto user, string email);
     public UserDto DeleteUser(string email);
+    public UserDto Login(UserDto user);
 }

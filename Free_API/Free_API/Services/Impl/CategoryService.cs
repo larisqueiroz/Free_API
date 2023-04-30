@@ -2,6 +2,7 @@
 using Free_API.Models.DAO;
 using AutoMapper;
 using Free_API.Models.DTO;
+using BadHttpRequestException = Microsoft.AspNetCore.Http.BadHttpRequestException;
 
 namespace Free_API.Services;
 
@@ -40,7 +41,7 @@ public class CategoryService : ICategoryService
         var categorySaved = _categoryRepository.GetById(id);
         if (categorySaved == null)
         {
-            throw new Exception("Categoria não encontrada");
+            throw new BadHttpRequestException("Categoria não encontrada");
         }
 
         categorySaved.dishes = categoryData.dishes;
@@ -56,7 +57,7 @@ public class CategoryService : ICategoryService
         var categorySaved = _categoryRepository.GetById(id);
         if (categorySaved == null)
         {
-            throw new Exception("Categoria não encontrada");
+            throw new BadHttpRequestException("Categoria não encontrada");
         }
         return _mapper.Map<CategoryDto>(_categoryRepository.Delete(categorySaved));
     }
