@@ -98,9 +98,7 @@ public class UserService : IUserService
     private string CreateToken(UserDto user)
     {
         List<Claim> claims = new List<Claim>();
-        {
-            new Claim(ClaimTypes.Name, user.Name);
-        }
+        claims.Add(new Claim(ClaimTypes.Name, user.Name));
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_Configuration.GetSection("AppSettings:Token").Value));
