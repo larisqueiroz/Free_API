@@ -116,6 +116,9 @@ namespace FreeAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int>("UserType")
+                        .HasColumnType("int");
+
                     b.HasKey("Email");
 
                     b.ToTable("Users");

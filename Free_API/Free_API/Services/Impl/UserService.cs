@@ -9,7 +9,9 @@ using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Security.Claims;
+using Free_API.Enums;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Extensions;
 using BadHttpRequestException = Microsoft.AspNetCore.Http.BadHttpRequestException;
 
 namespace Free_API.Services.Impl;
@@ -72,6 +74,7 @@ public class UserService : IUserService
         userDao.Email = user.Email;
         userDao.Hash = passwordHash;
         userDao.Salt = passwordSalt;
+        userDao.UserType = user.UserType;
         return _mapper.Map<UserDto>(_userRepository.Save(userDao));
     }
 
@@ -99,6 +102,8 @@ public class UserService : IUserService
     {
         List<Claim> claims = new List<Claim>();
         claims.Add(new Claim(ClaimTypes.Name, user.Name));
+        claims.Add(new Claim(ClaimTypes.Email, user.Email));
+        claims.Add(new Claim(ClaimTypes.Role, user.UserType.ToString()));
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_Configuration.GetSection("AppSettings:Token").Value));

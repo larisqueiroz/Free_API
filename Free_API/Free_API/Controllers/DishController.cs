@@ -3,6 +3,7 @@ using AutoMapper;
 using Free_API.Models.DAO;
 using Free_API.Models.DTO;
 using Free_API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Free_API.Controllers;
 
@@ -37,6 +38,7 @@ public class DishController: ControllerBase
         return Ok(dish);
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult<Dish> Post([FromBody] DishDto dish)
     {
@@ -44,12 +46,14 @@ public class DishController: ControllerBase
         return Ok(savedDish);
     }
 
+    [Authorize]
     [HttpPut]
     public ActionResult<Dish> Put(DishDto dish, [FromQuery] int id)
     {
         return Ok(_dishService.UpdateDish(dish, id));
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public ActionResult<Dish> Delete([FromRoute] int id)
     {

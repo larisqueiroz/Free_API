@@ -3,6 +3,7 @@ using Free_API.Models.DAO;
 using Free_API.Models.DTO;
 using AutoMapper;
 using Free_API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Free_API.Controllers;
 
@@ -37,6 +38,7 @@ public class CategoryController: ControllerBase
         return Ok(category);
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult<Category> Post([FromBody] CategoryDto category)
     {
@@ -44,12 +46,14 @@ public class CategoryController: ControllerBase
         return Ok(savedCategory);
     }
 
+    [Authorize]
     [HttpPut]
     public ActionResult<Category> Put(CategoryDto category, [FromQuery] int id)
     {
         return Ok(_categoryService.UpdateCategory(category, id));
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public ActionResult<Category> Delete([FromRoute] int id)
     {

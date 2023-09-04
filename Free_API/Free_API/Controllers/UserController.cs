@@ -5,6 +5,9 @@ using Free_API.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using Free_API.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.OpenApi.Extensions;
 
 namespace Free_API.Controllers;
 
@@ -33,5 +36,12 @@ public class UserController : ControllerBase
     public async Task<ActionResult<UserDto>> Login(UserDto request)
     {
         return _userService.Login(request);
+    }
+    
+    [Authorize(Roles = "3")]
+    [HttpGet]
+    public async Task<ActionResult<List<UserDto>>> GetAll()
+    {
+        return _userService.getAllUsers();
     }
 }
