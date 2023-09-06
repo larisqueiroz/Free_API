@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using Free_API.Enums;
+using Free_API.Models.DTO.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Extensions;
 
@@ -40,9 +41,11 @@ public class UserController : ControllerBase
     
     [Authorize(Policy = "Administrator")]
     [HttpGet]
-    public async Task<ActionResult<List<UserDto>>> GetAll()
+    public async Task<ActionResult<List<UserDto>>> GetAll([FromQuery] int page)
     {
-        return _userService.getAllUsers();
+        var paged = new PagedResult<UserDto>();
+        paged.PagedSearch(page, _userService.getAllUsers(), 2f);
+        return Ok(paged);
     }
     
     [Authorize(Policy = "Administrator")]

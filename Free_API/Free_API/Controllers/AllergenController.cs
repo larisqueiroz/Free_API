@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Free_API.Models.DAO;
 using Free_API.Models.DTO;
+using Free_API.Models.DTO.Pagination;
 using Free_API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,11 @@ namespace Free_API.Controllers
         }
     
         [HttpGet]
-        public ActionResult<List<AllergenDto>> GetAll()
+        public ActionResult<List<AllergenDto>> GetAll([FromQuery] int page)
         {
-            return Ok(_allergenService.getAllAllergens());
+            var paged = new PagedResult<AllergenDto>();
+            paged.PagedSearch(page, _allergenService.getAllAllergens(), 2f);
+            return Ok(paged);
         }
         
         [HttpGet("{id}")]

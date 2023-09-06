@@ -2,6 +2,7 @@
 using AutoMapper;
 using Free_API.Models.DAO;
 using Free_API.Models.DTO;
+using Free_API.Models.DTO.Pagination;
 using Free_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
@@ -21,9 +22,11 @@ public class DishController: ControllerBase
     }
     
     [HttpGet]
-    public ActionResult<List<DishDto>> GetAll()
+    public ActionResult<List<DishDto>> GetAll([FromQuery] int page)
     {
-        return Ok(_dishService.getAllDishes());
+        var paged = new PagedResult<DishDto>();
+        paged.PagedSearch(page, _dishService.getAllDishes(), 2f);
+        return Ok(paged);
     }
 
     [HttpGet("{id}")]

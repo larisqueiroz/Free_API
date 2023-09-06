@@ -2,6 +2,7 @@
 using Free_API.Models.DAO;
 using Free_API.Models.DTO;
 using AutoMapper;
+using Free_API.Models.DTO.Pagination;
 using Free_API.Services;
 using Microsoft.AspNetCore.Authorization;
 
@@ -21,9 +22,11 @@ public class CategoryController: ControllerBase
     }
     
     [HttpGet]
-    public ActionResult<List<CategoryDto>> GetAll()
+    public ActionResult<PagedResult<CategoryDto>> GetAll([FromQuery] int page)
     {
-        return Ok(_categoryService.getAllCategories());
+        var paged = new PagedResult<CategoryDto>();
+        paged.PagedSearch(page, _categoryService.getAllCategories(), 2f);
+        return Ok(paged);
     }
 
     [HttpGet("{id}")]
