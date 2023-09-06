@@ -8,6 +8,7 @@ using Free_API.Services;
 using Free_API.Services.Impl;
 using Free_API.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -48,6 +49,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             ValidateIssuer = false,
             ValidateAudience = false
         };
+    }
+);
+
+builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("Users", policy => policy.RequireRole("Admin", "Operator", "User")
+            .RequireAuthenticatedUser());
+        
+        options.AddPolicy("Administrator", policy => policy.RequireRole("Admin")
+            .RequireAuthenticatedUser());
+        
+        options.AddPolicy("Operators", policy => policy.RequireRole("Admin", "Operator")
+            .RequireAuthenticatedUser());
     }
 );
 

@@ -38,7 +38,7 @@ public class DishController: ControllerBase
         return Ok(dish);
     }
 
-    [Authorize]
+    [Authorize(Policy = "Operators")]
     [HttpPost]
     public ActionResult<Dish> Post([FromBody] DishDto dish)
     {
@@ -46,14 +46,14 @@ public class DishController: ControllerBase
         return Ok(savedDish);
     }
 
-    [Authorize]
+    [Authorize(Policy = "Operators")]
     [HttpPut]
     public ActionResult<Dish> Put(DishDto dish, [FromQuery] int id)
     {
         return Ok(_dishService.UpdateDish(dish, id));
     }
 
-    [Authorize]
+    [Authorize(Policy = "Operators")]
     [HttpDelete("{id}")]
     public ActionResult<Dish> Delete([FromRoute] int id)
     {

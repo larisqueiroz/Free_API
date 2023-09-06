@@ -101,9 +101,24 @@ public class UserService : IUserService
     private string CreateToken(UserDto user)
     {
         List<Claim> claims = new List<Claim>();
+        Claim role = null;
         claims.Add(new Claim(ClaimTypes.Name, user.Name));
         claims.Add(new Claim(ClaimTypes.Email, user.Email));
-        claims.Add(new Claim(ClaimTypes.Role, user.UserType.ToString()));
+
+        switch (user.UserType)
+        {
+            case UserType.USER:
+                claims.Add(new Claim(ClaimTypes.Role, "User"));
+                break;
+            case UserType.OPERATOR:
+                claims.Add(new Claim(ClaimTypes.Role, "Operator"));
+                break;
+            case UserType.ADMIN:
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                break;
+            default:
+                break;
+        }
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_Configuration.GetSection("AppSettings:Token").Value));

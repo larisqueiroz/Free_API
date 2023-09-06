@@ -38,7 +38,7 @@ public class CategoryController: ControllerBase
         return Ok(category);
     }
 
-    [Authorize]
+    [Authorize(Policy = "Operators")]
     [HttpPost]
     public ActionResult<Category> Post([FromBody] CategoryDto category)
     {
@@ -46,14 +46,14 @@ public class CategoryController: ControllerBase
         return Ok(savedCategory);
     }
 
-    [Authorize]
+    [Authorize(Policy = "Operators")]
     [HttpPut]
     public ActionResult<Category> Put(CategoryDto category, [FromQuery] int id)
     {
         return Ok(_categoryService.UpdateCategory(category, id));
     }
 
-    [Authorize]
+    [Authorize(Policy = "Operators")]
     [HttpDelete("{id}")]
     public ActionResult<Category> Delete([FromRoute] int id)
     {

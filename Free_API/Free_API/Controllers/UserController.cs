@@ -38,7 +38,7 @@ public class UserController : ControllerBase
         return _userService.Login(request);
     }
     
-    [Authorize(Roles = "3")]
+    [Authorize(Policy = "Administrator")]
     [HttpGet]
     public async Task<ActionResult<List<UserDto>>> GetAll()
     {
