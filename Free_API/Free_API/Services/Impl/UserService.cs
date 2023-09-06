@@ -146,6 +146,7 @@ public class UserService : IUserService
 
         userSaved.Email = userData.Email;
         userSaved.Name = userData.Name;
+        userSaved.UserType = userData.UserType;
 
         var userUpdated = _userRepository.Update(userSaved);
 

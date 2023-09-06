@@ -44,4 +44,20 @@ public class UserController : ControllerBase
     {
         return _userService.getAllUsers();
     }
+    
+    [Authorize(Policy = "Administrator")]
+    [HttpPut]
+    public ActionResult<UserDto> Put(UserDto user, [FromQuery] string email)
+    {
+        return Ok(_userService.UpdateUser(user, email));
+    }
+
+    [Authorize(Policy = "Administrator")]
+    [HttpDelete("{id}")]
+    public ActionResult<UserDto> Delete([FromRoute] string email)
+    {
+        var deleted = _userService.DeleteUser(email);
+
+        return Ok(deleted);
+    }
 }

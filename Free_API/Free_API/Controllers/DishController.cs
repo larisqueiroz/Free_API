@@ -21,13 +21,13 @@ public class DishController: ControllerBase
     }
     
     [HttpGet]
-    public ActionResult<List<Dish>> GetAll()
+    public ActionResult<List<DishDto>> GetAll()
     {
         return Ok(_dishService.getAllDishes());
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Dish> GetbyId([FromRoute] int id)
+    public ActionResult<DishDto> GetbyId([FromRoute] int id)
     {
         var dish = _dishService.getDishById(id);
         if (dish == null)
@@ -40,7 +40,7 @@ public class DishController: ControllerBase
 
     [Authorize(Policy = "Operators")]
     [HttpPost]
-    public ActionResult<Dish> Post([FromBody] DishDto dish)
+    public ActionResult<DishDto> Post([FromBody] DishDto dish)
     {
         var savedDish = _dishService.SaveDish(dish);
         return Ok(savedDish);
@@ -48,14 +48,14 @@ public class DishController: ControllerBase
 
     [Authorize(Policy = "Operators")]
     [HttpPut]
-    public ActionResult<Dish> Put(DishDto dish, [FromQuery] int id)
+    public ActionResult<DishDto> Put(DishDto dish, [FromQuery] int id)
     {
         return Ok(_dishService.UpdateDish(dish, id));
     }
 
     [Authorize(Policy = "Operators")]
     [HttpDelete("{id}")]
-    public ActionResult<Dish> Delete([FromRoute] int id)
+    public ActionResult<DishDto> Delete([FromRoute] int id)
     {
         var deleted = _dishService.DeleteDish(id);
 

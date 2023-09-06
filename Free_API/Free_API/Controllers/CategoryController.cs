@@ -21,13 +21,13 @@ public class CategoryController: ControllerBase
     }
     
     [HttpGet]
-    public ActionResult<List<Category>> GetAll()
+    public ActionResult<List<CategoryDto>> GetAll()
     {
         return Ok(_categoryService.getAllCategories());
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Category> GetbyId([FromRoute] int id)
+    public ActionResult<CategoryDto> GetbyId([FromRoute] int id)
     {
         var category = _categoryService.getCategoryById(id);
         if (category == null)
@@ -55,7 +55,7 @@ public class CategoryController: ControllerBase
 
     [Authorize(Policy = "Operators")]
     [HttpDelete("{id}")]
-    public ActionResult<Category> Delete([FromRoute] int id)
+    public ActionResult<CategoryDto> Delete([FromRoute] int id)
     {
         var deleted = _categoryService.DeleteCategory(id);
 

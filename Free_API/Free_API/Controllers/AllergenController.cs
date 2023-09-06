@@ -21,13 +21,13 @@ namespace Free_API.Controllers
         }
     
         [HttpGet]
-        public ActionResult<List<Allergen>> GetAll()
+        public ActionResult<List<AllergenDto>> GetAll()
         {
             return Ok(_allergenService.getAllAllergens());
         }
         
         [HttpGet("{id}")]
-        public ActionResult<Allergen> GetbyId([FromRoute] int id)
+        public ActionResult<AllergenDto> GetbyId([FromRoute] int id)
         {
             var allergen = _allergenService.getAllergenById(id);
             if (allergen == null)
@@ -40,7 +40,7 @@ namespace Free_API.Controllers
 
         [Authorize(Policy = "Operators")]
         [HttpPost]
-        public ActionResult<Allergen> Post([FromBody] AllergenDto allergen)
+        public ActionResult<AllergenDto> Post([FromBody] AllergenDto allergen)
         {
             var savedAllergen = _allergenService.SaveAllergen(allergen);
             return Ok(savedAllergen);
@@ -48,14 +48,14 @@ namespace Free_API.Controllers
 
         [Authorize(Policy = "Operators")]
         [HttpPut]
-        public ActionResult<Allergen> Put(AllergenDto allergen, [FromQuery] int id)
+        public ActionResult<AllergenDto> Put(AllergenDto allergen, [FromQuery] int id)
         {
             return Ok(_allergenService.UpdateAllergen(allergen, id));
         }
 
         [Authorize(Policy = "Operators")]
         [HttpDelete("{id}")]
-        public ActionResult<Allergen> Delete([FromRoute] int id)
+        public ActionResult<AllergenDto> Delete([FromRoute] int id)
         {
             var deleted = _allergenService.DeleteAllergen(id);
 
