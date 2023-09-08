@@ -22,10 +22,10 @@ public class DishController: ControllerBase
     }
     
     [HttpGet]
-    public ActionResult<List<DishDto>> GetAll([FromQuery] int page)
+    public ActionResult<List<DishDto>> GetAll([FromQuery] int page, bool order, string? keyword)
     {
         var paged = new PagedResult<DishDto>();
-        paged.PagedSearch(page, _dishService.getAllDishes(), 2f);
+        paged.PagedSearch(page, _dishService.getAllDishes(), keyword,2f, order);
         return Ok(paged);
     }
 

@@ -22,10 +22,10 @@ namespace Free_API.Controllers
         }
     
         [HttpGet]
-        public ActionResult<List<AllergenDto>> GetAll([FromQuery] int page)
+        public ActionResult<List<AllergenDto>> GetAll([FromQuery] int page, bool order, string? keyword)
         {
             var paged = new PagedResult<AllergenDto>();
-            paged.PagedSearch(page, _allergenService.getAllAllergens(), 2f);
+            paged.PagedSearch(page, _allergenService.getAllAllergens(), keyword,2f, order);
             return Ok(paged);
         }
         

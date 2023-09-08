@@ -41,10 +41,10 @@ public class UserController : ControllerBase
     
     [Authorize(Policy = "Administrator")]
     [HttpGet]
-    public async Task<ActionResult<List<UserDto>>> GetAll([FromQuery] int page)
+    public async Task<ActionResult<List<UserDto>>> GetAll([FromQuery] int page, bool order, string? keyword)
     {
         var paged = new PagedResult<UserDto>();
-        paged.PagedSearch(page, _userService.getAllUsers(), 2f);
+        paged.PagedSearch(page, _userService.getAllUsers(), keyword,2f, order);
         return Ok(paged);
     }
     

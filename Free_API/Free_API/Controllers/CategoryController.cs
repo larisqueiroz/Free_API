@@ -22,10 +22,10 @@ public class CategoryController: ControllerBase
     }
     
     [HttpGet]
-    public ActionResult<PagedResult<CategoryDto>> GetAll([FromQuery] int page)
+    public ActionResult<PagedResult<CategoryDto>> GetAll([FromQuery] int page, bool order, string? keyword)
     {
         var paged = new PagedResult<CategoryDto>();
-        paged.PagedSearch(page, _categoryService.getAllCategories(), 2f);
+        paged.PagedSearch(page, _categoryService.getAllCategories(), keyword,2f, order);
         return Ok(paged);
     }
 
