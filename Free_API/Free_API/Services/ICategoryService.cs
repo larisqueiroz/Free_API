@@ -10,4 +10,5 @@ public interface ICategoryService
     public CategoryDto SaveCategory(CategoryDto menu);
     public CategoryDto UpdateCategory(CategoryDto menu, int id);
     public CategoryDto DeleteCategory(int id);
+    public CategoryDto getCategoryByName(string name);
 }

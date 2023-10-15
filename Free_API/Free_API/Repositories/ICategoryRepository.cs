@@ -9,4 +9,5 @@ public interface ICategoryRepository
     public Category Save(Category category);
     public Category Update(Category category);
     public Category Delete(Category category);
+    public Category GetByName(string name);
 }

@@ -17,12 +17,17 @@ public class DishRepository : IDishRepository
     
     public List<Dish> GetAll()
     {
-        return _dishRepository.Dishes.Include(d => d.category).ToList();
+        return _dishRepository.Dishes.Include(d => d.category).Include(d => d.allergens).ToList();
     }
 
     public Dish GetById(int id)
     {
-        return _dishRepository.Dishes.Where(d => d.Id == id).Include(d => d.category).FirstOrDefault();
+        return _dishRepository.Dishes.Where(d => d.Id == id).Include(d => d.category).Include(d => d.allergens).FirstOrDefault();
+    }
+    
+    public Dish GetByName(string name)
+    {
+        return _dishRepository.Dishes.Where(d => d.Name == name).Include(d => d.category).Include(d => d.allergens).FirstOrDefault();
     }
 
     public Dish Save(Dish dish)

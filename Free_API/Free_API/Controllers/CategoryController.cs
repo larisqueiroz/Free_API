@@ -45,6 +45,8 @@ public class CategoryController: ControllerBase
     [HttpPost]
     public ActionResult<Category> Post([FromBody] CategoryDto category)
     {
+        if (_categoryService.getCategoryByName(category.Name) != null)
+            return BadRequest("Categoria já existe.");
         var savedCategory = _categoryService.SaveCategory(category);
         return Ok(savedCategory);
     }

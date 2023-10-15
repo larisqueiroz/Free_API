@@ -23,6 +23,11 @@ public class AllergenRepository : IAllergenRepository
     {
         return _allergenRepository.Allergens.Where(a => a.Id == id).FirstOrDefault();
     }
+    
+    public Allergen GetByName(string name)
+    {
+        return _allergenRepository.Allergens.Where(a => a.Name == name | a.Name.ToLower().Contains(name)).FirstOrDefault();
+    }
 
     public Allergen Save(Allergen allergen)
     {

@@ -27,6 +27,12 @@ public class AllergenService : IAllergenService
         var allergen = _allergenRepository.GetById(id);
         return _mapper.Map<Allergen, AllergenDto>(allergen);
     }
+    
+    public AllergenDto getAllergenByName(string name)
+    {
+        var allergen = _allergenRepository.GetByName(name);
+        return _mapper.Map<Allergen, AllergenDto>(allergen);
+    }
 
     public AllergenDto SaveAllergen(AllergenDto allergen)
     {

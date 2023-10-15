@@ -1,5 +1,6 @@
 ﻿using Free_API.Data;
 using Free_API.Models.DAO;
+using Microsoft.EntityFrameworkCore;
 
 namespace Free_API.Repositories;
 
@@ -14,12 +15,17 @@ public class CategoryRepository : ICategoryRepository
     
     public List<Category> GetAll()
     {
-        return _categoryRepository.Categories.ToList();
+        return _categoryRepository.Categories.Include(c => c.dishes).ThenInclude(c => c.allergens).ToList();
     }
 
     public Category GetById(int id)
     {
-        return _categoryRepository.Categories.Where(c => c.Id == id).FirstOrDefault();
+        return _categoryRepository.Categories.Where(c => c.Id == id).Include(c => c.dishes).ThenInclude(c => c.allergens).FirstOrDefault();
+    }
+    
+    public Category GetByName(string name)
+    {
+        return _categoryRepository.Categories.Where(a => a.Name == name | a.Name.ToLower().Contains(name)).FirstOrDefault();
     }
 
     public Category Save(Category category)

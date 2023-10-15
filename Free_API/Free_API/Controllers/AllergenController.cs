@@ -45,6 +45,8 @@ namespace Free_API.Controllers
         [HttpPost]
         public ActionResult<AllergenDto> Post([FromBody] AllergenDto allergen)
         {
+            if (_allergenService.getAllergenByName(allergen.Name) != null)
+                return BadRequest("Alergênico já existe.");
             var savedAllergen = _allergenService.SaveAllergen(allergen);
             return Ok(savedAllergen);
         }

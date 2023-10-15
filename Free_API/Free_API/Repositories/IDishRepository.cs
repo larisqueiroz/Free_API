@@ -9,4 +9,5 @@ public interface IDishRepository
     public Dish Save(Dish menu);
     public Dish Update(Dish menu);
     public Dish Delete(Dish menu);
+    public Dish GetByName(string name);
 }

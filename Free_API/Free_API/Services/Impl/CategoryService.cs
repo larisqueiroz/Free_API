@@ -28,6 +28,12 @@ public class CategoryService : ICategoryService
         var category = _categoryRepository.GetById(id);
         return _mapper.Map<Category, CategoryDto>(category);
     }
+    
+    public CategoryDto getCategoryByName(string name)
+    {
+        var category = _categoryRepository.GetByName(name);
+        return _mapper.Map<Category, CategoryDto>(category);
+    }
 
     public CategoryDto SaveCategory(CategoryDto category)
     {

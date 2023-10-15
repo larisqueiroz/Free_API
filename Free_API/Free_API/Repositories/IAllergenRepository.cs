@@ -9,4 +9,5 @@ public interface IAllergenRepository
     public Allergen Save(Allergen category);
     public Allergen Update(Allergen category);
     public Allergen Delete(Allergen category);
+    public Allergen GetByName(string name);
 }

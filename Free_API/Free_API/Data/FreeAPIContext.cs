@@ -18,6 +18,9 @@ namespace Free_API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasAlternateKey(user => new { user.Email });
+
+            modelBuilder.Entity<Allergen>().HasIndex(a => a.Name).IsUnique();
+            modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
         }
     }
 }

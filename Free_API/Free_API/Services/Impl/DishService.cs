@@ -9,11 +9,13 @@ namespace Free_API.Services.Impl;
 public class DishService : IDishService
 {
     public readonly IDishRepository _dishRepository;
+    public readonly IAllergenService _allergenService;
     public readonly IMapper _mapper;
     
-    public DishService(IDishRepository dishRepository, IMapper mapper)
+    public DishService(IDishRepository dishRepository, IMapper mapper, IAllergenService allergenService)
     {
         _dishRepository = dishRepository;
+        _allergenService = allergenService;
         _mapper = mapper;
     }
     

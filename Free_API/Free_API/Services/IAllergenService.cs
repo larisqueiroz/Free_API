@@ -9,4 +9,5 @@ public interface IAllergenService
     public AllergenDto SaveAllergen(AllergenDto menu);
     public AllergenDto UpdateAllergen(AllergenDto menu, int id);
     public AllergenDto DeleteAllergen(int id);
+    public AllergenDto getAllergenByName(string name);
 }
