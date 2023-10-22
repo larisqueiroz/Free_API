@@ -1,4 +1,6 @@
-﻿namespace Free_API.Models.DAO
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Free_API.Models.DAO
 {
     public class Allergen
     {

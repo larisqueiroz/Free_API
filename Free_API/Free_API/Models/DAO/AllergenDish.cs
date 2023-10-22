@@ -6,4 +6,10 @@ public class AllergenDish
     public Allergen Allergen { get; set; }
     public int DishId { get; set; }
     public Dish Dish { get; set; }
+
+    public AllergenDish(int allergenId, int dishId)
+    {
+        AllergenId = allergenId;
+        DishId = dishId;
+    }
 }
