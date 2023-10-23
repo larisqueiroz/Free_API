@@ -25,7 +25,7 @@ public class CategoryController: ControllerBase
     public ActionResult<PagedResult<CategoryDto>> GetAll([FromQuery] int page, bool order, string? keyword)
     {
         var paged = new PagedResult<CategoryDto>();
-        paged.PagedSearch(page, _categoryService.getAllCategories(), keyword,2f, order);
+        paged.PagedSearch(page, _categoryService.getAllCategories(), keyword,4f, order);
         return Ok(paged);
     }
 

@@ -8,7 +8,7 @@ public class PagedResult<T>
     public int CurrentPage { get; set; }
     public double PagesCount { get; set; }
 
-    public void PagedSearch(int page, List<T> itemsSearched, string? keyword, double pageItems = 2f, bool alphabeticalOrder = false)
+    public void PagedSearch(int page, List<T> itemsSearched, string? keyword, double pageItems = 4f, bool alphabeticalOrder = false)
     {
         var type = typeof(T);
 

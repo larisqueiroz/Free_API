@@ -25,7 +25,7 @@ public class DishController: ControllerBase
     public ActionResult<List<DishDto>> GetAll([FromQuery] int page, bool order, string? keyword)
     {
         var paged = new PagedResult<DishDto>();
-        paged.PagedSearch(page, _dishService.getAllDishes(), keyword,2f, order);
+        paged.PagedSearch(page, _dishService.getAllDishes(), keyword,4f, order);
         return Ok(paged);
     }
 

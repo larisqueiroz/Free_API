@@ -44,7 +44,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult<List<UserDto>>> GetAll([FromQuery] int page, bool order, string? keyword)
     {
         var paged = new PagedResult<UserDto>();
-        paged.PagedSearch(page, _userService.getAllUsers(), keyword,2f, order);
+        paged.PagedSearch(page, _userService.getAllUsers(), keyword,4f, order);
         return Ok(paged);
     }
     

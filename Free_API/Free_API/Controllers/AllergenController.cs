@@ -25,7 +25,7 @@ namespace Free_API.Controllers
         public ActionResult<List<AllergenDto>> GetAll([FromQuery] int page, bool order, string? keyword)
         {
             var paged = new PagedResult<AllergenDto>();
-            paged.PagedSearch(page, _allergenService.getAllAllergens(), keyword,2f, order);
+            paged.PagedSearch(page, _allergenService.getAllAllergens(), keyword,4f, order);
             return Ok(paged);
         }
         
