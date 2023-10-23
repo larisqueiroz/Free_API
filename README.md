@@ -20,10 +20,10 @@ This is a restaurant menu API. You can add, edit and delete a dish, see and edit
 4. Now you can add, edit or search for dishes, allergens and categories.
 
 ## Screenshots
-<img src="assets/deletedish.png" width="932" height= "376" title="deleteDishExample">
-<img src="assets/getallergens.png" width="323" height= "275" title="getAllergensExample">
-<img src="assets/putcategory.png" width="304" height= "256" title="putCategoryExample">
-<img src="assets/savedish.png" width="350" height= "307" title="saveDishExample">
+<img src="assets/deletedish.png" width="644" height= "541" title="deleteDishExample">
+<img src="assets/getallergens.png" width="516" height= "518" title="getAllergensExample">
+<img src="assets/putcategory.png" width="472" height= "464" title="putCategoryExample">
+<img src="assets/savedish.png" width="643" height= "641" title="saveDishExample">
 
 ## Contact me
 LinkedIn: https://www.linkedin.com/in/larissalimaqueiroz/
