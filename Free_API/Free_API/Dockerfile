@@ -3,23 +3,18 @@
 #Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
 #For more information, please see https://aka.ms/containercompat
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["Free_API/Free_API.csproj", "Free_API/"]
-RUN dotnet restore "Free_API/Free_API.csproj"
+FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
+WORKDIR /source
 COPY . .
-WORKDIR "/src/Free_API"
-RUN dotnet build "Free_API.csproj" -c Release -o /app/build
+RUN dotnet restore "./Free_API.csproj" --disable-parallel
+RUN dotnet publish "./Free_API.csproj" -c release -o /app /p:UseAppHost=false
 
-FROM build AS publish
-RUN dotnet publish "Free_API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ENV ASPNETCORE_ENVIRONMENT=Development
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app ./
+
+EXPOSE 5000
+
 ENTRYPOINT ["dotnet", "Free_API.dll"]
