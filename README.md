@@ -1,5 +1,5 @@
 # Free_API
-A restaurant menu with allergens API.
+A restaurant menu API with allergens.
 
 
 ## Description
